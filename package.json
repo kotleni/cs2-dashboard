@@ -27,10 +27,9 @@
     "next-themes": "^0.4.6",
     "nextjs-actions-result": "^1.0.1",
     "prettier": "^3.6.2",
-    "rcon": "^1.1.0",
+    "rcon-client": "^4.2.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "srcds-rcon": "^2.2.1",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

@@ -50,18 +50,15 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      rcon:
-        specifier: ^1.1.0
-        version: 1.1.0
+      rcon-client:
+        specifier: ^4.2.5
+        version: 4.2.5
       react:
         specifier: ^19.1.0
         version: 19.1.0
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
-      srcds-rcon:
-        specifier: ^2.2.1
-        version: 2.2.1
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -1095,8 +1092,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  rcon@1.1.0:
-    resolution: {integrity: sha512-eotwcApOBjfadTjqQlrZVR4jzlwGCMNxmHhnFZx+g4kouwwRstRHkk1ON7DzkqrHNIjADSh0cU3gThSsDolUpg==}
+  rcon-client@4.2.5:
+    resolution: {integrity: sha512-AnX1GU/ZTlwtYup3H6h0J1hwfP3OYltXVe+8ReBzmNEepX3xGH8nDg7gYqT5Y9rpAS/LmQ48h0BKINt1YGd8bA==}
 
   react-dom@19.1.0:
     resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
@@ -1147,9 +1144,6 @@ packages:
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
-
-  srcds-rcon@2.2.1:
-    resolution: {integrity: sha512-f88yTif5rXDjxstkMTBNbe3HhTf7M3u30SxB0wDv3zY+vD2eg+yYb4TGfPNrMiX15VHrf39ARK8HMoDHHOf7RA==}
 
   streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
@@ -1218,6 +1212,9 @@ packages:
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
+
+  typed-emitter@0.1.0:
+    resolution: {integrity: sha512-Tfay0l6gJMP5rkil8CzGbLthukn+9BN/VXWcABVFPjOoelJ+koW8BuPZYk+h/L+lEeIp1fSzVRiWRPIjKVjPdg==}
 
   typescript@5.8.3:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
@@ -2158,7 +2155,9 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  rcon@1.1.0: {}
+  rcon-client@4.2.5:
+    dependencies:
+      typed-emitter: 0.1.0
 
   react-dom@19.1.0(react@19.1.0):
     dependencies:
@@ -2224,8 +2223,6 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
-  srcds-rcon@2.2.1: {}
-
   streamsearch@1.1.0: {}
 
   strip-json-comments@3.1.1: {}
@@ -2278,6 +2275,8 @@ snapshots:
   type-check@0.4.0:
     dependencies:
       prelude-ls: 1.2.1
+
+  typed-emitter@0.1.0: {}
 
   typescript@5.8.3: {}
 
