@@ -1,13 +1,20 @@
 'use client';
 
 import {execCommand} from '@/actions/exec-command';
+import {getPlayers, PlayerInfo} from '@/actions/get-players';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 export default function AdminPage() {
     const [commandLine, setCommandLine] = useState('');
     const [logLines, setLogLines] = useState<string[]>([]);
+    const [players, setPlayers] = useState<PlayerInfo[]>([]);
+
+    const fetchPlayersList = async () => {
+        const playersList = await getPlayers();
+        setPlayers(playersList);
+    };
 
     const sendCommand = async () => {
         const result = await execCommand(commandLine.trim());
@@ -17,8 +24,25 @@ export default function AdminPage() {
         console.log('result is ' + result);
     };
 
+    useEffect(() => {
+        void fetchPlayersList();
+    }, []);
+
     return (
         <div className="w-full h-full flex flex-col justify-between gap-2">
+            <div className="flex flex-col gap-1 p-4">
+                {players.map(player => {
+                    return (
+                        <div
+                            key={player.id}
+                            className="w-60 bg-primary hover:bg-accent bg-primary-foreground rounded-sm px-2 flex flex-row justify-between gap-1"
+                        >
+                            <p>{player.name}</p>
+                            <p>{player.isBot ? 'BOT' : player.ping + ' ms'}</p>
+                        </div>
+                    );
+                })}
+            </div>
             <div className="p-4">
                 {logLines.map((line, index) => {
                     return <div key={index}>{line}</div>;
