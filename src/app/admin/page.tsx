@@ -22,6 +22,16 @@ export default function AdminPage() {
         setLogLines(newLines);
         //setLogLines([...logLines, ...newLines]);
         console.log('result is ' + result);
+        setCommandLine('');
+    };
+
+    const sendCustomCommand = async (command: string) => {
+        const result = await execCommand(command.trim());
+        const newLines = result.split('\n');
+        setLogLines(newLines);
+        //setLogLines([...logLines, ...newLines]);
+        console.log('result is ' + result);
+        setCommandLine('');
     };
 
     const kickPlayer = async (name: string) => {
@@ -37,6 +47,23 @@ export default function AdminPage() {
 
     return (
         <div className="w-full h-full flex flex-col justify-between gap-2">
+            <div className="flex flex-row gap-2 p-4">
+                {['mp_restartgame 1', 'bot_kick', 'bot_add', 'say SERVER'].map(
+                    (cmd, index) => {
+                        return (
+                            <Button
+                                key={index}
+                                variant="secondary"
+                                onClick={() => {
+                                    void sendCustomCommand(cmd);
+                                }}
+                            >
+                                {cmd}
+                            </Button>
+                        );
+                    },
+                )}
+            </div>
             <div className="flex flex-col gap-1 p-4">
                 {players.map(player => {
                     return (
