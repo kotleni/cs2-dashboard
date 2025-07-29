@@ -24,6 +24,13 @@ export default function AdminPage() {
         console.log('result is ' + result);
     };
 
+    const kickPlayer = async (name: string) => {
+        const result = await execCommand('kick ' + name);
+        console.log(result);
+
+        await fetchPlayersList();
+    };
+
     useEffect(() => {
         void fetchPlayersList();
     }, []);
@@ -35,10 +42,19 @@ export default function AdminPage() {
                     return (
                         <div
                             key={player.id}
-                            className="w-60 bg-primary hover:bg-accent bg-primary-foreground rounded-sm px-2 flex flex-row justify-between gap-1"
+                            className="w-60 bg-primary hover:bg-accent bg-primary-foreground rounded-sm px-2 flex flex-row items-center justify-between gap-1"
                         >
                             <p>{player.name}</p>
                             <p>{player.isBot ? 'BOT' : player.ping + ' ms'}</p>
+                            <Button
+                                variant="destructive"
+                                className="h-5 cursor-pointer"
+                                onClick={() => {
+                                    void kickPlayer(player.name);
+                                }}
+                            >
+                                Kick
+                            </Button>
                         </div>
                     );
                 })}
