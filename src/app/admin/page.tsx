@@ -64,7 +64,8 @@ export default function AdminPage() {
                     },
                 )}
             </div>
-            <div className="flex flex-col gap-1 p-4">
+            <div className="flex flex-col gap-1 p-4 absolute right-0">
+                <h2 className="text-lg font-semibold">Players</h2>
                 {players.map(player => {
                     return (
                         <div
@@ -85,6 +86,15 @@ export default function AdminPage() {
                         </div>
                     );
                 })}
+                <Button
+                    variant="default"
+                    className="h-7"
+                    onClick={() => {
+                        void fetchPlayersList();
+                    }}
+                >
+                    Refresh
+                </Button>
             </div>
             <div className="p-4">
                 {logLines.map((line, index) => {
