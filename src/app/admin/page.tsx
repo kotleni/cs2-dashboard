@@ -1,5 +1,6 @@
 'use client';
 
+import {changeLevel} from '@/actions/change-level';
 import {execCommand} from '@/actions/exec-command';
 import {GameInfo, getGameInfo} from '@/actions/get-gameinfo';
 import {getPlayers, PlayerInfo} from '@/actions/get-players';
@@ -7,6 +8,7 @@ import {setGameMode} from '@/actions/set-gamemode';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {allGameModesForCombobox} from '@/data/game-mode';
+import {allMaps, allMapsForCombobox} from '@/data/map';
 import {cn} from '@/lib/utils';
 import {Popover, PopoverTrigger, PopoverContent} from '@radix-ui/react-popover';
 import {
@@ -21,7 +23,18 @@ import {ChevronsUpDown, Check} from 'lucide-react';
 import React from 'react';
 import {useEffect, useState} from 'react';
 
-function GameModeCombobox() {
+interface ComboboxItem {
+    label: string;
+    value: string;
+}
+
+interface ComboboxProps {
+    items: ComboboxItem[];
+    placeholder: string;
+    onSelected: (index: number) => void;
+}
+
+function Combobox({items, placeholder, onSelected}: ComboboxProps) {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState('');
 
@@ -35,23 +48,19 @@ function GameModeCombobox() {
                     className="w-[200px] justify-between"
                 >
                     {value
-                        ? allGameModesForCombobox.find(
-                              gamemode => gamemode.value === value,
-                          )?.label
-                        : 'Select gamemode...'}
+                        ? items.find(gamemode => gamemode.value === value)
+                              ?.label
+                        : placeholder}
                     <ChevronsUpDown className="opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
                 <Command>
-                    <CommandInput
-                        placeholder="Search framework..."
-                        className="h-9"
-                    />
+                    <CommandInput placeholder={placeholder} className="h-9" />
                     <CommandList>
-                        <CommandEmpty>No gamemode found.</CommandEmpty>
+                        <CommandEmpty>Nothing found.</CommandEmpty>
                         <CommandGroup>
-                            {allGameModesForCombobox.map(gamemode => (
+                            {items.map((gamemode, index) => (
                                 <CommandItem
                                     key={gamemode.value}
                                     value={gamemode.value}
@@ -63,7 +72,7 @@ function GameModeCombobox() {
                                         );
                                         setOpen(false);
 
-                                        void setGameMode(gamemode.value);
+                                        onSelected(index);
                                     }}
                                 >
                                     {gamemode.label}
@@ -142,7 +151,20 @@ export default function AdminPage() {
                     game_mode={gameInfo?.gameMode}, game_type=
                     {gameInfo?.gameType}
                 </p>
-                <GameModeCombobox />
+                <Combobox
+                    placeholder="Select gamemode..."
+                    items={allGameModesForCombobox}
+                    onSelected={index => {
+                        void setGameMode(allGameModesForCombobox[index].value);
+                    }}
+                />
+                <Combobox
+                    placeholder="Select map..."
+                    items={allMapsForCombobox}
+                    onSelected={index => {
+                        void changeLevel(allMaps[index].name);
+                    }}
+                />
             </div>
             <div className="flex flex-row gap-2 p-4">
                 {['mp_restartgame 1', 'bot_kick', 'bot_add', 'say SERVER'].map(
